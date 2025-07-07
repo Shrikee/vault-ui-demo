@@ -17,7 +17,7 @@ import {
   useBoringVaultV1,
 } from "../contexts/v1/BoringVaultContextV1";
 import { WagmiProvider, createConfig, http } from "wagmi";
-import { arbitrum } from "wagmi/chains";
+import { arbitrum, mainnet } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   ConnectKitButton,
@@ -30,11 +30,11 @@ import { useEthersSigner } from "../hooks/ethers";
 const config = createConfig(
   getDefaultConfig({
     // Your dApps chains
-    chains: [arbitrum],
+    chains: [mainnet],
     transports: {
       // RPC URL for each chain
-      [arbitrum.id]: http(
-        `https://arbitrum-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`
+      [mainnet.id]: http(
+        `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`
       ),
     },
 
@@ -43,7 +43,7 @@ const config = createConfig(
     walletConnectProjectId: process.env.WALLETCONNECT_PROJECT_ID!,
 
     // Required App Info
-    appName: "Boring Vault Arbitrm Example App with Direct Withdraws",
+    appName: "Boring Vault mainnet Example App with Direct Withdraws",
 
     // Optional App Info
     appDescription: "An example app for the Boring Vault V1",
@@ -51,7 +51,7 @@ const config = createConfig(
   })
 );
 const ethersInfuraProvider = new ethers.InfuraProvider(
-  "arbitrum",
+  "mainnet",
   process.env.INFURA_API_KEY
 );
 
@@ -153,8 +153,8 @@ const VaultWidget = () => {
           <Text fontSize="xl" fontWeight={"bold"}>
             Boring Vault Example
           </Text>
-          <Text fontSize="l">{`TVL (ETH): ${assets}`}</Text>
-          <Text fontSize="md">{`Share (1 unit) Value (ETH): ${shareValue}`}</Text>
+          <Text fontSize="l">{`TVL (WBTC): ${assets}`}</Text>
+          <Text fontSize="md">{`Share (1 unit) Value (WBTC): ${shareValue}`}</Text>
           <Text fontSize="md">{`User Share Balance: ${userShares}`}</Text>
           <Text fontSize="md">{`User Share Unlock Unix seconds timestamp: ${userUnlockTime}`}</Text>
           <HStack spacing="2" paddingBottom={"2em"}>
@@ -240,37 +240,37 @@ const App = () => {
           <ConnectKitProvider>
             <ConnectKitButton />
             <BoringVaultV1Provider
-              chain="arbitrum"
-              vaultContract="0x289F7fA5B0f9064D904E83B8a125d1Ac3bf81547"
-              tellerContract="0x6BB4DC9d90cF4E9599bCf938233FAe7F78bfB9D1"
-              accountantContract="0xC0d0ef42a9183614Ceb84f87ABA8512dCCD45fF3"
-              lensContract="0x5232bc0F5999f8dA604c42E1748A13a170F94A1B"
-              delayWithdrawContract="0xB2F9C926B676CBD4fFd2bEE450d4aD9Adf8EAb6A"
+              chain="mainnet"
+              vaultContract="0x4E34a7B04e6DF1e4C5dF68A30dC8460F63873F74"
+              tellerContract="0x6EDfa0315A6d9476057681292Fef5cfcBE8B8D31"
+              accountantContract="0x0675A0E2F2885fC391Bd6f626939e89b90D04444"
+              lensContract="0x65bf8AcAac9E7dCeBD5A7b6A50640B0901283d85"
+              delayWithdrawContract="0x6F26eD1b8b83679A5baa5F92821ad1185f353925"
               ethersProvider={ethersInfuraProvider}
               depositTokens={[
                 {
-                  displayName: "WETH",
+                  displayName: "WBTC",
                   image:
-                    "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=032",
-                  address: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
-                  decimals: 18,
+                  "https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.png?v=002",
+                  address: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+                  decimals: 8,
                 },
               ]}
               withdrawTokens={[
                 {
-                  displayName: "WETH",
+                  displayName: "WBTC",
                   image:
-                    "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=032",
-                  address: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
-                  decimals: 18,
+                  "https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.png?v=002",
+                  address: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+                  decimals: 8,
                 },
               ]}
               baseAsset={{
-                displayName: "WETH",
+                displayName: "WBTC",
                 image:
-                  "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=032",
-                address: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
-                decimals: 18,
+                  "https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.png?v=002",
+                  address: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+                  decimals: 8,
               }}
               vaultDecimals={18}
             >

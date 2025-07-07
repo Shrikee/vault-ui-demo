@@ -18,6 +18,7 @@ import {
 } from "../../types";
 import BoringVaultABI from "../../abis/v1/BoringVaultABI";
 import BoringTellerABI from "../../abis/v1/BoringTellerABI";
+import BoringTellerMultiAssetABI from "../../abis/v1/BoringTellerWithMultiAssetABI";
 import BoringAccountantABI from "../../abis/v1/BoringAccountantABI";
 import BoringLensABI from "../../abis/v1/BoringLensABI";
 import BoringWithdrawQueueContractABI from "../../abis/v1/BoringWithdrawQueueContractABI";
@@ -245,7 +246,7 @@ export const BoringVaultV1Provider: React.FC<{
         );
         const tellerEthersContract = new Contract(
           tellerContract,
-          BoringTellerABI,
+          BoringTellerMultiAssetABI,
           ethersProvider
         );
         const accountantEthersContract = new Contract(
@@ -416,7 +417,7 @@ export const BoringVaultV1Provider: React.FC<{
             outputTokenContract ? outputTokenContract : vaultContract
           );
           console.log("User balance from contract: ", balance);
-          return Number(balance) / Math.pow(10, decimals!);
+          return Number(balance)
         } catch (error) {
           console.error("Error fetching user balance", error);
           throw error;
@@ -574,7 +575,7 @@ export const BoringVaultV1Provider: React.FC<{
           // Get teller contract ready
           const tellerContractWithSigner = new Contract(
             tellerContract,
-            BoringTellerABI,
+            BoringTellerMultiAssetABI,
             signer
           );
 
@@ -757,10 +758,10 @@ export const BoringVaultV1Provider: React.FC<{
           );
           console.warn(
             "Amount to withdraw: ",
-            amountWithdrawBaseDenom.toNumber()
+            bigNumAmt.toNumber()
           );
 
-          if (allowance < amountWithdrawBaseDenom.toNumber()) {
+          if (allowance < bigNumAmt.toNumber()) {
             const tempApproving = {
               initiated: true,
               loading: true,
@@ -769,7 +770,7 @@ export const BoringVaultV1Provider: React.FC<{
             console.log("Approving token ...");
             const approveTx = await vaultContractWithSigner.approve(
               delayWithdrawContract,
-              amountWithdrawBaseDenom.toFixed(0)
+              bigNumAmt.toFixed(0)
             );
 
             // Wait for confirmation
@@ -807,7 +808,7 @@ export const BoringVaultV1Provider: React.FC<{
           const withdrawTx =
             await delayWithdrawContractWithSigner.requestWithdraw(
               tokenOut.address,
-              amountWithdrawBaseDenom.toFixed(0),
+              bigNumAmt.toFixed(0),
               maxLossBaseDenom.toFixed(0),
               thirdPartyClaimer
             );
@@ -1970,7 +1971,7 @@ export const BoringVaultV1Provider: React.FC<{
             IncentiveDistributorABI,
             signer
           );
-          
+
           const ensureHexPrefix = (value: string) =>
             value?.startsWith("0x") ? value : `0x${value}`;
 

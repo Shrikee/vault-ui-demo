@@ -8,14 +8,14 @@ dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 /* Uncomment for ethereum example with boring queue  */
 module.exports = {
-  entry: "./src/examples/v3.tsx", // Entry point for your React app
+  entry: "./src/examples/v2.tsx", // Entry point for your React app
   output: {
     path: path.resolve(__dirname, "dist"), // Output directory
-    filename: "v3.js", // Output file
+    filename: "v2.js", // Output file
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/examples/v3.html", // Path to your HTML template
+      template: "./src/examples/v2.html", // Path to your HTML template
     }),
     new webpack.DefinePlugin({
       "process.env": JSON.stringify(process.env), // Defines it on process.env
@@ -37,6 +37,9 @@ module.exports = {
     static: path.resolve(__dirname, "dist"), // Serve files from 'dist' directory
     compress: true,
     port: 9000, // Port to run the dev server
+    devMiddleware: {
+      writeToDisk: true,
+    },
   },
   stats: {
     errorDetails: true, // Display the details of errors
@@ -84,7 +87,7 @@ module.exports = {
 };
 */
 
-/* Uncomment for ethereum example with withdraw queue 
+/* Uncomment for ethereum example with withdraw queue
 
 module.exports = {
   entry: "./src/examples/v1.tsx", // Entry point for your React app
