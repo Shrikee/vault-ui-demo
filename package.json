@@ -12,7 +12,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && webpack --mode production",
     "prepublish": "npm run build",
     "test": "jest",
     "dev": "webpack --mode production && webpack serve --mode development --open"
