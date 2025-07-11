@@ -84,19 +84,6 @@ jobs:
             echo "Error: .env file not created"
             exit 1
           fi
-      - name: Create .env file
-        env:
-          INFURA_API_KEY: ${{ secrets.INFURA_API_KEY }}
-        run: |
-          echo "INFURA_API_KEY=${{ secrets.INFURA_API_KEY }}" > .env
-      - name: Verify .env file
-        run: |
-          if [ -f .env ]; then
-            cat .env
-          else
-            echo "Error: .env file not created"
-            exit 1
-          fi
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
