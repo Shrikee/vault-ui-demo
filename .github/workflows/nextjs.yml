@@ -76,6 +76,14 @@ jobs:
       - name: Create .env file
         run: |
           echo "INFURA_API_KEY=${{ secrets.INFURA_API_KEY }}" > .env
+      - name: Verify .env file
+        run: |
+          if [ -f .env ]; then
+            cat .env
+          else
+            echo "Error: .env file not created"
+            exit 1
+          fi
       - name: Build
         run: ${{ steps.detect-package-manager.outputs.runner }} npm run build
       - name: Upload artifact
