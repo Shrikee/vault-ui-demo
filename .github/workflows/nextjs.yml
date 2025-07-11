@@ -72,10 +72,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Create .env file
-        env:
-          INFURA_API_KEY: ${{ vars.INFURA_API_KEY }}
         run: |
-          echo "INFURA_API_KEY=${{ vars.INFURA_API_KEY }}" > .env
+          echo "INFURA_API_KEY=642c4ea60c0c40dc96146248b4e7ce2a" > .env
       - name: Verify .env file
         run: |
           if [ -f .env ]; then
